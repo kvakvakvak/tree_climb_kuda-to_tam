@@ -365,10 +365,10 @@ ITEMS_IN_BARK = ["камешек", "малый драгоценный камен
 # ==============================================================
 
 EGG_CLUTCHES = {
-    "лесного голубя":             {"min": 1, "max": 2, "usual_min": 2, "usual_max": 2},
-    "большого пёстрого дятла":    {"min": 4, "max": 8, "usual_min": 5, "usual_max": 7},
-    "поползня":                   {"min": 4, "max": 12, "usual_min": 6, "usual_max": 9},
-    "синицы":                     {"min": 8, "max": 16, "usual_min": 9, "usual_max": 13},
+    "лесной голубь":             {"min": 1, "max": 2, "usual_min": 2, "usual_max": 2},
+    "большой пёстрый дятел":    {"min": 4, "max": 8, "usual_min": 5, "usual_max": 7},
+    "поползень":                   {"min": 4, "max": 12, "usual_min": 6, "usual_max": 9},
+    "синица":                     {"min": 8, "max": 16, "usual_min": 9, "usual_max": 13},
 }
 
 def roll_clutch(bird_key):
@@ -403,15 +403,18 @@ def generate_hollow():
         bird = random.choice(list(EGG_CLUTCHES.keys()))
         count = roll_clutch(bird)
         w = _eggs_word(count)
-        return (f"Дупло с гнездом, наседки нет. {count} {w} {bird}. Можно забрать.",
+        # пример: "В дупле гнездо лесного голубя. 3 яйца. Можно забрать."
+        return (f"В дупле гнездо ({bird}). {count} {w}. Можно забрать.",
                 [("eggs", bird, count)], 0.0, 0)
     else:
         bird = random.choice(list(EGG_CLUTCHES.keys()))
         count = roll_clutch(bird)
         w = _eggs_word(count)
-        return (f"Дупло с наседкой. Птица ({bird}) сидит на {count} {w} "
-                "и не собирается уходить.",
+        # пример: "В дупле сидит лесной голубь на 1 яйце и шипит на каждого, кто лезет ближе."
+        return (f"В дупле сидит {bird} на {count} {w} "
+                "и явно не хочет, чтобы кто-то лез ближе.",
                 [("brooding", bird, count)], 0.0, 0)
+
 
 # ==============================================================
 # ААААААААААА ЯРУСЫ (d100) — ПЕРЕСЧИТАННЫЕ ПОРОГИ + ШАНСЫ РЕСУРСОВ
