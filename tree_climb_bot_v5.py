@@ -1335,7 +1335,7 @@ class CoopTreeClimb:
         for _ in range(n):
             climber.resources.append(f"яйцо {bird}")
         left = total - n
-        lines = [f"{climber.name} берёт {n} {w} {bird}. "
+        lines = [f"{climber.name} берёт {n} {w} ({bird}). "
                  f"(ресурсы: {len(climber.resources)}/{climber.max_slots})"]
         if left > 0:
             lines.append(f"  Оставлено в гнезде: {left}.")
