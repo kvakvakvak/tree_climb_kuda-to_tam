@@ -956,8 +956,9 @@ class CoopTreeClimb:
 
         if cur.pending_found and cur.is_active:
             lines.append(f"\nРесурсы заполнены. Найдено: {', '.join(cur.pending_found)}. "
-                         f"Выберите, что взять.")
+                        f"Выберите, что взять.")
             return "\n".join(lines), self._pick_kb(cur)
+
 
         if cur.meditating:
             return "\n".join(lines), self._meditation_kb()
@@ -1299,24 +1300,18 @@ class CoopTreeClimb:
                 return lines
 
         if not found:
-            lines.append("  " + random.choice([
+            lines.append(" " + random.choice([
                 "Ничего не нашлось.", "Только ветер в листве.",
                 "Пусто.", "Ни добычи, ни находок."]))
+            return lines
 
-        if found_items and not climber.pending_eggs and not climber.pending_brooding:
-            taken, overflow = [], []
-            for item in found_items:
-                if climber.res_free > 0:
-                    climber.resources.append(item)
-                    taken.append(item)
-                else:
-                    overflow.append(item)
-            if taken:
-                lines.append(f"  Взято: {', '.join(taken)}. "
-                             f"(ресурсы: {len(climber.resources)}/{climber.max_slots})")
-            if overflow:
-                climber.pending_found = overflow
+        # Если что‑то нашли и нет спец-состояний с яйцами/наседкой — всегда даём выбрать
+        if not climber.pending_eggs and not climber.pending_brooding:
+            climber.pending_found = found_items[:]  # все найденные предметы в очередь выбора
+            return lines
+
         return lines
+
 
     # -- Яйца --
 
@@ -1662,7 +1657,7 @@ class CoopTreeClimb:
                           ("Оставить", "secondary", "brood_leave")]])
 
     def _pick_kb(self, c):
-        rows = [[(f"Взять: {item}", "primary", f"pick_{i}")]
+        rows = [[(f"{item}", "primary", f"pick_{i}")]
                 for i, item in enumerate(c.pending_found)]
         rows.append([("Пропустить", "secondary", "pick_skip")])
         return self._kb(rows)
