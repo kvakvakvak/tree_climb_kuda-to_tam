@@ -48,12 +48,12 @@ GM_CLIMB_FLAVOR = [
     "На соседнем дереве сидит ворона и смотрит.",
     "Паутина блеснула между веток.",
     "Жук-короед выглянул из коры и спрятался обратно.",
-    "Отсюда видно поляну. Там пусто.",
+    "С верхушки видно поляну. Там пусто.",
     "Где-то внизу хрустнула ветка. Может, ветер, а может и не ветер.",
     "Солнечный луч пробился сквозь крону. Тёплое пятно на шерсти.",
     "Ствол здесь шершавый, когти цепляются хорошо.",
     "Лишайник на коре мягкий и чуть скользкий.",
-    "Два муравья тащат гусеницу вверх по стволу. Трудяги!",
+    "Два муравья тащат гусеницу вверх по стволу. Трудяги.",
     "Пахнет сырой корой и прелыми листьями.",
     "Ветка качнулась — с неё сорвалась капля росы.",
     "Сверху донёсся стук дятла.",
@@ -63,21 +63,21 @@ GM_CLIMB_FLAVOR = [
     "Откуда-то доносится запах цветов.",
     "Мошка кружит перед носом и улетает.",
     "Ствол слегка вибрирует от ветра. Чувствуется лапами.",
-    "Жёлудь/шишка/сук сорвался с ветки и полетел вниз, стукнув по дороге о ствол.",
-    "Где-то каркнула ворона. Аж по ушам режет.",
+    "Жёлудь сорвался с ветки и полетел вниз, стукнув по дороге о сук.",
+    "Где-то каркнула ворона. По ушам режет.",
     "Кора в этом месте отслаивается. Под ней — жучки.",
     "Сойка прошмыгнула между ветками и затихла.",
 ]
 
 GM_DESCEND_FLAVOR = [
-    "Спускаться труднее, чем казалось!",
+    "Спускаться всегда труднее, чем казалось.",
     "Лапы нащупывают следующую ветку. Есть.",
-    "Внизу трава кажется мягкой. Ох как обманчиво.",
-    "Кора здесь более гладкая, осторожнее!",
+    "Внизу трава кажется мягкой. Обманчиво.",
+    "Кора здесь более гладкая, осторожнее.",
     "Ветер качает ветки. Не стоит торопиться.",
     "Земля приближается.",
     "Когти скребут по коре. Медленно, но верно.",
-    "Падает сук — летит до-о-о-о-олго.",
+    "Падает сук — летит долго.",
     "Чем ниже, тем толще ветки. Надёжнее.",
     "Снизу тянет прохладой. Тень от кроны густая.",
     "Паук удирает в сторону — потревожили.",
@@ -114,16 +114,16 @@ GM_WAIT_FLAVOR = [
 ]
 
 GM_CLIMB_MINOR_INJURY_FLAVOR = [
-    "Ветки цепляются за шерсть. Больно.",
-    "Кора царапает подушечки лап.",
-    "Неудачно зацепился — ободрало бок.",
-    "Коготь застрял в коре на секунду. Неприятно.",
-    "Сучок царапнул по уху. Ай.",
-    "Лапа соскользнула. Ободрало подушечку.",
-    "Ветка хлестнула по морде. Ощутимо.",
-    "Кора обломилась под когтями. Чуть не сорвался.",
-    "Смола прилипла к лапе — пришлось рвануть.",
-    "Шерсть зацепилась за сук. Клок остался на ветке.",
+    "Неловкое движение. Не обошлось без последствий.",
+    "Зацепился неудачно. Ощутимо.",
+    "Лапа соскользнула на мгновение.",
+    "Кора подвела. Мелочь, но неприятно.",
+    "Чуть замешкался — и вот результат.",
+    "Тело напомнило, что это дерево, а не ровная тропа.",
+    "Не повезло. Бывает.",
+    "Один неверный шаг — и мелкая неприятность.",
+    "Ветка качнулась не вовремя.",
+    "На секунду потерял равновесие.",
 ]
 
 GM_EXPLORE_FALL_RISK = [
@@ -172,35 +172,32 @@ def calculate_current_hp(hunger_key, size_key):
 
 CAT_PAWS = ["передняя правая лапа", "передняя левая лапа",
             "задняя правая лапа", "задняя левая лапа"]
-CAT_JOINTS = ["плечевой сустав", "локтевой сустав", "запястный сустав",
-              "тазобедренный сустав", "коленный сустав", "скакательный сустав"]
 
 INJURIES_MINOR = [
-    {"name": "царапина",   "dmg": (3, 8),  "ongoing": 0.0,  "ongoing_dmg": (0, 0)},
-    {"name": "ссадина",    "dmg": (4, 10), "ongoing": 0.05, "ongoing_dmg": (1, 3)},
-    {"name": "ушиб",       "dmg": (6, 14), "ongoing": 0.08, "ongoing_dmg": (2, 5)},
-    {"name": "синяк",      "dmg": (5, 12), "ongoing": 0.05, "ongoing_dmg": (1, 3)},
-    {"name": "гематома",   "dmg": (8, 16), "ongoing": 0.10, "ongoing_dmg": (2, 4)},
+    {"name": "царапина",   "dmg": (3, 5),  "ongoing": 0.0,  "ongoing_dmg": (0, 0)},
+    {"name": "ссадина",    "dmg": (1, 3),  "ongoing": 0.05, "ongoing_dmg": (1, 2)},
+    {"name": "ушиб",       "dmg": (1, 4),  "ongoing": 0.08, "ongoing_dmg": (1, 2)},
+    {"name": "синяк",      "dmg": (2, 4),  "ongoing": 0.05, "ongoing_dmg": (1, 2)},
+    {"name": "гематома",   "dmg": (4, 5),  "ongoing": 0.10, "ongoing_dmg": (1, 3)},
     {"name": "занозы в подушечках лап", "dmg": (1, 3), "ongoing": 1.0, "ongoing_dmg": (1, 1)},
     {"name": "разодранные подушечки лап", "dmg": (1, 3), "ongoing": 1.0, "ongoing_dmg": (1, 1)},
 ]
 
 INJURIES_MEDIUM = [
-    {"name": "растяжение",       "dmg": (12, 25), "ongoing": 0.20, "ongoing_dmg": (3, 8)},
-    {"name": "вывих",            "dmg": (15, 28), "ongoing": 0.25, "ongoing_dmg": (4, 9)},
-    {"name": "надорванный коготь", "dmg": (10, 20), "ongoing": 0.22, "ongoing_dmg": (3, 7)},
+    {"name": "растяжение",       "dmg": (2, 12),  "ongoing": 0.20, "ongoing_dmg": (2, 5), "agility_penalty": 3},
+    {"name": "вывих",            "dmg": (5, 15),  "ongoing": 0.25, "ongoing_dmg": (3, 6), "agility_penalty": 3},
+    {"name": "надорванный коготь", "dmg": (2, 10),  "ongoing": 0.22, "ongoing_dmg": (2, 5), "agility_penalty": 3},
 ]
 
-INJURY_FRACTURE = {"name": "перелом", "dmg": (48, 57), "ongoing": 0.40, "ongoing_dmg": (8, 15)}
+INJURY_FRACTURE = {"name": "перелом", "dmg": (10, 21), "ongoing": 0.40, "ongoing_dmg": (5, 10)}
 
 INJURY_MULTIPLE_ABRASIONS = {"name": "множественные ссадины", "dmg": (4, 5),
                               "ongoing": 0.08, "ongoing_dmg": (1, 2)}
 
 def _roll_dislocation():
     paw = random.choice(CAT_PAWS)
-    joint = random.choice(CAT_JOINTS)
     dmg = random.randint(20, 33)
-    return {"name": f"вывернутая конечность ({paw}, {joint})",
+    return {"name": f"вывернутая конечность ({paw})",
             "dmg": dmg, "ongoing": 0.30, "ongoing_dmg": (5, 10)}
 
 def _roll_tail_fracture():
@@ -218,8 +215,11 @@ def roll_injury_minor():
 def roll_injury_medium():
     chosen = random.choice(INJURIES_MEDIUM)
     dmg = random.randint(*chosen["dmg"])
-    return {"name": chosen["name"], "dmg": dmg,
-            "ongoing": chosen["ongoing"], "ongoing_dmg": chosen["ongoing_dmg"]}
+    result = {"name": chosen["name"], "dmg": dmg,
+              "ongoing": chosen["ongoing"], "ongoing_dmg": chosen["ongoing_dmg"]}
+    if "agility_penalty" in chosen:
+        result["agility_penalty"] = chosen["agility_penalty"]
+    return result
 
 def roll_fracture():
     dmg = random.randint(*INJURY_FRACTURE["dmg"])
@@ -864,7 +864,7 @@ class CoopTreeClimb:
                           f"ЕЗ {c.hp}/{c.max_hp}, "
                           f"ловк. {c.agility}")
         cur = self.climbers[self.turn_order[0]]
-        msg = (f"--- ЛАЗАНИЕ ПО ДЕРЕВУ ({n} перс.) ---{note}\n\n"
+        msg = (f"Лазание по дереву ({n} перс.):{note}\n\n"
                + "\n".join(roster)
                + "\n\nВысокое дерево. Кора шершавая, ветви крепкие."
                + f"\n\nХод: {cur.name}\n\n"
@@ -1436,7 +1436,7 @@ class CoopTreeClimb:
             climber.meditation_shiny = item
             climber.ground_stash.append(item)
             lines.append("")
-            lines.append("Что-то блеснуло внизу, у корней...")
+            lines.append("На земле что-то блеснуло. Показалось ли?")
             lines.append(f"x1 {item}")
 
         lines.append("")
@@ -1446,22 +1446,35 @@ class CoopTreeClimb:
 
     # -- Страховка (ловкость ловящего) --
 
-    def _try_catch(self, fallen, target_tier):
-        nearby = [c for c in self.climbers.values()
-                  if c.user_id != fallen.user_id and c.alive and not c.is_out
-                  and c.current_tier >= 0 and abs(c.current_tier - target_tier) <= 1]
+    def _try_catch(self, fallen, from_tier):
+        # Ищем союзников на том же ярусе ИЛИ на соседнем (±1)
+        # Также проверяем позицию самого падающего
+        fallen_tier = fallen.current_tier
+        nearby = []
+        for c in self.climbers.values():
+            if c.user_id == fallen.user_id:
+                continue
+            if not c.alive or c.is_out or c.finished:
+                continue
+            if c.current_tier < 0:
+                continue
+            # Союзник рядом если на том же ярусе что и падающий,
+            # или на ярусе from_tier, или в пределах ±1 от любого из них
+            if (abs(c.current_tier - from_tier) <= 1
+                    or abs(c.current_tier - fallen_tier) <= 1):
+                nearby.append(c)
         if not nearby:
             return False, None
-        # Сортируем по ловкости (самый ловкий первый)
-        nearby.sort(key=lambda c: c.agility, reverse=True)
+        # Сортируем: древолазы первые, потом по ловкости
+        nearby.sort(key=lambda c: (c.is_treeclimber, c.agility), reverse=True)
         for ally in nearby:
-            # Древолаз ВСЕГДА может поймать
+            # Древолаз ВСЕГДА ловит
             if ally.is_treeclimber:
                 return True, ally
-            # Ловкость 37+ = 100%
+            # Ловкость 37+ = 100% шанс поймать
             if ally.agility >= 37:
                 return True, ally
-            # От 19 до 36: линейный шанс
+            # От 19 до 36: линейный шанс (19 = ~5%, 36 = ~95%)
             if ally.agility >= 19:
                 catch_chance = (ally.agility - 18) / (37 - 18)
                 if random.random() < catch_chance:
@@ -1470,9 +1483,15 @@ class CoopTreeClimb:
         return False, None
 
     def _has_allies_nearby(self, climber, tier):
-        return any(c.alive and not c.is_out and c.current_tier >= 0
-                   and abs(c.current_tier - tier) <= 1
-                   for c in self.climbers.values() if c.user_id != climber.user_id)
+        fallen_tier = climber.current_tier
+        for c in self.climbers.values():
+            if c.user_id == climber.user_id:
+                continue
+            if not c.alive or c.is_out or c.finished or c.current_tier < 0:
+                continue
+            if abs(c.current_tier - tier) <= 1 or abs(c.current_tier - fallen_tier) <= 1:
+                return True
+        return False
 
     def _count_on_tier(self, tier_idx):
         return sum(1 for c in self.climbers.values()
@@ -1502,13 +1521,13 @@ class CoopTreeClimb:
     # -- Статус и итоги --
 
     def _all_status(self):
-        lines = ["-- Статус --"]
+        lines = ["Статус:"]
         for uid in self.turn_order:
             lines.append(self.climbers[uid].status_line())
         return "\n".join(lines)
 
     def _final_summary(self):
-        lines = ["--- ИТОГИ ---"]
+        lines = ["Итоги:"]
         for uid in self.turn_order:
             c = self.climbers[uid]
             st = "[выбыл]" if c.is_out else "[спустился]" if c.finished else ""
@@ -1537,7 +1556,7 @@ class CoopTreeClimb:
 
     def _bag_kb(self):
         return self._kb([
-            [("Да, есть сумочка", "positive", "bag_yes"),
+            [("Да", "positive", "bag_yes"),
              ("Нет", "secondary", "bag_no")],
         ])
 
@@ -1666,7 +1685,7 @@ def cmd_tree(peer_id, user_id, args=None):
     game = CoopTreeClimb(host_id=user_id)
     active_games[peer_id] = game
     msg = game.add_player(user_id)
-    return (f"--- ЛАЗАНИЕ ПО ДЕРЕВУ ---\n\n{msg}\n\n"
+    return (f"Лазание по дереву:\n\n{msg}\n\n"
             f"Другие могут присоединиться (макс. 4).\n"
             f"Ответственный начинает, когда все готовы."), game.lobby_keyboard()
 
