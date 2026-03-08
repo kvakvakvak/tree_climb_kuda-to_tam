@@ -947,7 +947,7 @@ class CoopTreeClimb:
     def _post_action(self, cur, lines):
         if cur.pending_eggs and cur.is_active:
             eggs = cur.pending_eggs
-            lines.append(f"\nСколько {_eggs_word(eggs['count'])} забрать? "
+            lines.append(f"\nСколько забрать? "
                          f"(свободно: {cur.res_free}/{cur.max_slots})")
             return "\n".join(lines), self._eggs_kb(cur)
 
