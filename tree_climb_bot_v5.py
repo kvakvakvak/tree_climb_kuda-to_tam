@@ -1143,20 +1143,20 @@ class CoopTreeClimb:
 
         # Древолаз: удерживается или соскальзывает на ярус ниже
         if climber.is_treeclimber:
-            injury = roll_climb_injury()
-            climber.take_damage(injury["dmg"])
-            climber.injuries.append(injury)
-            if random.random() < 0.15 and from_tier > 0:
-                climber.current_tier = from_tier - 1
+            # 50% вообще без травмы, 50% — только мелкая
+            if random.random() < 0.5:
                 lines.append(f"Срыв! Но {climber.name} — древолаз. "
-                             f"Соскальзывает на {TIERS[from_tier - 1]['name']}.\n"
-                             f"Травма: {injury['name']}, -{injury['dmg']} ЕЗ "
-                             f"({climber.hp}/{climber.max_hp})")
+                            f"Удерживается на дереве без серьёзных последствий.")
             else:
-                lines.append(f"Срыв! Но {climber.name} — древолаз. "
-                             f"Вцепляется в кору и удерживается.\n"
-                             f"Травма: {injury['name']}, -{injury['dmg']} ЕЗ "
-                             f"({climber.hp}/{climber.max_hp})")
+                injury = roll_injury_minor()  # только мелкая травма
+                climber.take_damage(injury["dmg"])
+                climber.injuries.append(injury)
+                lines.append(
+                    f"Срыв! Но {climber.name} — древолаз. "
+                    f"Удерживается на дереве.\n"
+                    f"Травма: {injury['name']}, -{injury['dmg']} ЕЗ "
+                    f"({climber.hp}/{climber.max_hp})"
+                )
             if climber.check_out():
                 lines.append(f"{climber.name} не может продолжать. Нужна помощь целителя!")
             return lines
