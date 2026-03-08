@@ -236,10 +236,10 @@ def roll_climb_injury():
 def roll_fall_injuries_tier3():
     """Падение с 3-го яруса: всегда перелом или вывернутая конечность."""
     injuries = []
-    if random.random() < 0.5:
-        injuries.append(roll_fracture())
+    if random.random() < 0.95:
+        injuries.append(roll_fracture())  #95% перелом
     else:
-        injuries.append(_roll_dislocation())
+        injuries.append(_roll_dislocation())  #5% вывернутая конечность
     injuries.append(roll_multiple_abrasions())
     if random.random() < 0.35:
         injuries.append(_roll_tail_fracture())
@@ -247,8 +247,8 @@ def roll_fall_injuries_tier3():
     return injuries, False
 
 def roll_fall_injuries_tier2():
-    """Падение со 2-го яруса: большой шанс на лапы (60%), меньший — перелом/вывих."""
-    land_on_paws = random.random() < 0.60
+    """Падение со 2-го яруса: в основном мелкие и переломы, вывернутая лапа — очень редко. 60% преземление на лапы - остальное перелом/вывих"""
+    land_on_paws = random.random() < 0.70
     injuries = []
     if land_on_paws:
         for _ in range(5):
@@ -256,12 +256,13 @@ def roll_fall_injuries_tier2():
         return injuries, True
     else:
         r = random.random()
-        if r < 0.4:
-            injuries.append(roll_fracture())
-        elif r < 0.75:
-            injuries.append(_roll_dislocation())
+        if r < 0.55:
+            injuries.append(roll_fracture())          # 55% перелом
+        elif r < 0.60:
+            injuries.append(_roll_dislocation())      # 5% вывернутая конечность
         else:
-            injuries.append(roll_injury_medium())
+            injuries.append(roll_injury_medium())     # остальное — средние травмы
+
         injuries.append(roll_multiple_abrasions())
         for _ in range(3):
             injuries.append(roll_injury_minor())
