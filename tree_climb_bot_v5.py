@@ -1916,7 +1916,7 @@ class HoneyGame:
         return True, "\n".join(lines)
 
     def random_event(self):
-        if random.random() > 0.20:
+        if random.random() > 0.65:
             return None, None
 
         ev = random.choice(["nose_bee", "stuck_paw", "fur_bees",
@@ -1936,13 +1936,14 @@ class HoneyGame:
         return None, None
 
     def _color_pair(self, good_action):
+        # good_action: "a" или "b"
         if self.is_healer:
             if good_action == "a":
                 return ("positive", "secondary")
             else:
                 return ("secondary", "positive")
-        else:
-            return ("primary", "primary")
+        # обычные коты: все кнопки белые
+        return ("secondary", "secondary")
 
     def _ev_nose_bee(self):
         text = "Пчела отделяется от роя и садится вам на нос."
@@ -2314,18 +2315,20 @@ def handle_honey_callback(peer_id, user_id, payload):
     elif action.startswith("act_"):
         if action == "act_scratch":
             text = game.do_act_scratch()
+            need_event = True
         elif action == "act_break":
             text = game.do_act_break()
+            need_event = True
         elif action == "act_freeze":
             text = game.do_act_freeze()
+            need_event = False
         elif action == "act_down":
             game.phase = "finished"
             text = "Вы осторожно спускаетесь с ветки.\n\n" + game.final_text()
             return text, None
         else:
             return "Неизвестное действие.", None
-    else:
-        return "Неизвестное действие.", None
+
 
     attacked, swarm_text = game.check_swarm()
     if attacked:
@@ -2334,7 +2337,10 @@ def handle_honey_callback(peer_id, user_id, payload):
     if game.phase == "finished":
         return text, None
 
-    ev_text, ev_kb = game.random_event()
+    ev_text, ev_kb = (None, None)
+    if need_event:
+        ev_text, ev_kb = game.random_event()
+
     if ev_text:
         return text + "\n\n" + ev_text, ev_kb
 
