@@ -44,7 +44,7 @@ GM_CLIMB_FLAVOR = [
     "Солнечный луч пробился сквозь крону. Приятно теплит шерсть.",
     "Ствол здесь шершавый, когти цепляются хорошо.",
     "Лишайник на коре мягкий и чуть скользкий.",
-    "Два муравья тащат гусеницу вверх по стволу. Ну, рудяги!",
+    "Два муравья тащат гусеницу вверх по стволу. Ну, трудяги!",
     "Птица сорвалась с ветки и поспешила прочь от котов.",
     "Посещает навязчивая мысль ослабить хватку. Интересно, какого это, когда ломается лапа?",
     "Сверху донёсся стук дятла.",
@@ -1531,7 +1531,7 @@ class CoopTreeClimb:
     # -- Смена хода --
 
     def _advance_turn(self):
-        # активные – живы, не выбыл, не медитирует
+        # Активные = живы, не выбыли и не медитируют
         active_ids = [
             uid for uid in self.turn_order
             if self.climbers[uid].is_active
@@ -1539,9 +1539,10 @@ class CoopTreeClimb:
             and not self.climbers[uid].meditating
         ]
 
-        # если активных нет, но кто-то медитирует – просто держим ход на первом медитирующем
+        # Если активных нет, но кто‑то медитирует — держим ход на первом медитирующем
         if not active_ids:
-            med = [uid for uid in self.turn_order if self.climbers[uid].meditating]
+            med = [uid for uid in self.turn_order
+                if self.climbers[uid].meditating and not self.climbers[uid].is_out]
             if med:
                 for i, uid in enumerate(self.turn_order):
                     if uid == med[0]:
@@ -1549,7 +1550,7 @@ class CoopTreeClimb:
                         return
             return
 
-        # крутим очередь, пока не найдём активного И не медитирующего
+        # Иначе крутим очередь, пока не найдём не‑медитирующего
         for _ in range(len(self.turn_order)):
             self.current_turn_idx = (self.current_turn_idx + 1) % len(self.turn_order)
             uid = self.turn_order[self.current_turn_idx]
