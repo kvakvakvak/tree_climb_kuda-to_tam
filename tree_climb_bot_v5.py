@@ -1160,7 +1160,6 @@ class CoopTreeClimb:
                 lines.append(f"{climber.name} не может продолжать. Нужна помощь целителя!")
             return lines
 
-        # Не-древолаз: попытка поймать
         catcher, fallen, caught_from_below = self._try_catch(climber, from_tier)
         if catcher:
             injury = roll_climb_injury()
@@ -1175,10 +1174,15 @@ class CoopTreeClimb:
             else:
                 flavor = random.choice(CATCH_FLAVOR_SAME)
 
+            # после страховки падающий оказывается на уровне ловящего
+            climber.current_tier = catcher.current_tier
+
             text = flavor.format(catcher=catcher.name, fallen=climber.name)
-            lines.append(f"Срыв! {text}\n"
-                        f"Травма: {injury['name']} (смягчена), "
-                        f"-{reduced} ЕЗ ({climber.hp}/{climber.max_hp})")
+            lines.append(
+                f"Срыв! {text}\n"
+                f"Травма: {injury['name']} (смягчена), "
+                f"-{reduced} ЕЗ ({climber.hp}/{climber.max_hp})"
+            )
             if climber.check_out():
                 lines.append(f"{climber.name} не может продолжать. Нужна помощь целителя!")
             return lines
@@ -1333,7 +1337,7 @@ class CoopTreeClimb:
             return [f"{climber.name} оставляет яйца на месте."]
         w = _eggs_word(n)
         for _ in range(n):
-            climber.resources.append(f"яйцо {bird}")
+            climber.resources.append(f"яйцо ({bird})")
         left = total - n
         lines = [f"{climber.name} берёт {n} {w} ({bird}). "
                  f"(ресурсы: {len(climber.resources)}/{climber.max_slots})"]
@@ -1526,9 +1530,15 @@ class CoopTreeClimb:
     # -- Смена хода --
 
     def _advance_turn(self):
-        active_ids = [uid for uid in self.turn_order
-                      if self.climbers[uid].is_active and not self.climbers[uid].is_out
-                      and not self.climbers[uid].meditating]
+        # активные – живы, не выбыл, не медитирует
+        active_ids = [
+            uid for uid in self.turn_order
+            if self.climbers[uid].is_active
+            and not self.climbers[uid].is_out
+            and not self.climbers[uid].meditating
+        ]
+
+        # если активных нет, но кто-то медитирует – просто держим ход на первом медитирующем
         if not active_ids:
             med = [uid for uid in self.turn_order if self.climbers[uid].meditating]
             if med:
@@ -1537,11 +1547,13 @@ class CoopTreeClimb:
                         self.current_turn_idx = i
                         return
             return
+
+        # крутим очередь, пока не найдём активного И не медитирующего
         for _ in range(len(self.turn_order)):
             self.current_turn_idx = (self.current_turn_idx + 1) % len(self.turn_order)
             uid = self.turn_order[self.current_turn_idx]
             c = self.climbers[uid]
-            if (c.is_active and not c.is_out) or c.meditating:
+            if c.is_active and not c.is_out and not c.meditating:
                 return
 
     # -- Статус и итоги --
