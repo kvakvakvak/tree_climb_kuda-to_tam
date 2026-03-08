@@ -412,7 +412,7 @@ def generate_hollow():
         count = roll_clutch(bird)
         w = _eggs_word(count)
         # пример: "В дупле сидит лесной голубь на 1 яйце и шипит на каждого, кто лезет ближе."
-        return (f"В дупле сидит {bird} на {count} {w} "
+        return (f"В дупле сидит {bird} "
                 "и явно не хочет, чтобы кто-то лез ближе.",
                 [("brooding", bird, count)], 0.0, 0)
 
